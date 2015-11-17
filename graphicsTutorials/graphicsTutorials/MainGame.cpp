@@ -31,6 +31,8 @@ void MainGame::run()
 {
 	initSystems();
 
+	_sprite.init(-1.0f, -1.0f, 1.0f, 1.0f);
+
 	gameLoop();
 }
 
@@ -89,19 +91,16 @@ void MainGame::processInput()
 	}
 }
 
+//Draws the game using OpenGL
 void MainGame::drawGame()
 {
+	//Set the base depth to 1.0
 	glClearDepth(1.0);
+	//Clear the color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glEnableClientState(GL_COLOR_ARRAY);
+	_sprite.draw();
 
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex2f(0, 0);
-	glVertex2f(0, 500);
-	glVertex2f(500, 500);
-	glEnd();
-
+	//Swap our buffer and draw everything to the screen!
 	SDL_GL_SwapWindow(_window);
 }
