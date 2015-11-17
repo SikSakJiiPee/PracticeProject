@@ -1,18 +1,9 @@
 #include "MainGame.h"
+#include "Errors.h"
 
 #include <iostream>
 #include <string>
 
-
-void fatalError(std::string errorString)
-{
-	std::cout << errorString << std::endl;
-	std::cout << "Enter any kry to quit...";
-	int tmp;
-	std::cin >> tmp;
-	SDL_Quit();
-	exit(1);
-}
 
 MainGame::MainGame()
 {
@@ -53,6 +44,7 @@ void MainGame::initSystems()
 		fatalError("SDL_GL context could not be created!");
 	}
 
+	//Set up glew (optional but recommended)
 	GLenum error = glewInit();
 	if (error != GLEW_OK)
 	{
@@ -62,6 +54,15 @@ void MainGame::initSystems()
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+	initShaders();
+}
+
+void MainGame::initShaders()
+{
+	_colorProgram.compileShaders("Shaders/colorShading.vert.txt", "Shaders/colorShading.frag.txt");
+	_colorProgram.addAttribute("vertexPosition");
+	_colorProgram.linkShaders();
 }
 
 void MainGame::gameLoop()
@@ -99,7 +100,12 @@ void MainGame::drawGame()
 	//Clear the color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	_colorProgram.use();
+	
+	//Draw our Sprite
 	_sprite.draw();
+
+	_colorProgram.unuse();
 
 	//Swap our buffer and draw everything to the screen!
 	SDL_GL_SwapWindow(_window);
