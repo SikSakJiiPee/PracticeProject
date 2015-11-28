@@ -81,9 +81,9 @@ void GLSLProgram::linkShaders()
 	glDeleteShader(_fragmentShaderID);
 }
 
-GLuint GLSLProgram::getUniformLocation(const std::string& uniformName)
+GLint GLSLProgram::getUniformLocation(const std::string& uniformName)
 {
-	GLuint location = glGetUniformLocation(_programID, uniformName.c_str());
+	GLint location = glGetUniformLocation(_programID, uniformName.c_str());
 	if (location == GL_INVALID_INDEX)
 	{
 		fatalError("Uniform" + uniformName + " not found in shader!");
