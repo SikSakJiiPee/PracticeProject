@@ -5,6 +5,7 @@
 
 #include <fstream>
 
+//The : _numAttributes(0) ect. is an initialization list. It is a better way to initialize variables, since it avoids an extra copy. 
 GLSLProgram::GLSLProgram() : _numAttributes(0), _programID(0), _vertexShaderID(0), _fragmentShaderID(0)
 {
 }
@@ -14,7 +15,7 @@ GLSLProgram::~GLSLProgram()
 {
 }
 
-
+//Compiles the shaders into a form that your GPU can understand
 void GLSLProgram::compileShaders(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath)
 {
 	//Vertex and Fragment shaders are succesfully compiled
@@ -22,12 +23,14 @@ void GLSLProgram::compileShaders(const std::string& vertexShaderFilePath, const 
 	//Get a program object
 	_programID = glCreateProgram();
 
+	//Create the vertex shader object, and store its ID
 	_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	if (_vertexShaderID == 0)
 	{
 		fatalError("Vertex shader failed to be created!");
 	}
 
+	//Create the fragment shader object, and store its ID
 	_fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 	if (_fragmentShaderID == 0)
 	{
@@ -67,7 +70,7 @@ void GLSLProgram::linkShaders()
 		glDeleteShader(_fragmentShaderID);
 
 		//Use the infoLog as you see fit
-		std::printf("&s\n", &(errorLog[0]));
+		std::printf("%s\n", &(errorLog[0]));
 		fatalError("Shaders failed to link");
 	}
 
@@ -76,6 +79,16 @@ void GLSLProgram::linkShaders()
 	glDetachShader(_programID, _fragmentShaderID);
 	glDeleteShader(_vertexShaderID);
 	glDeleteShader(_fragmentShaderID);
+}
+
+GLuint GLSLProgram::getUniformLocation(const std::string& uniformName)
+{
+	GLuint location = glGetUniformLocation(_programID, uniformName.c_str());
+	if (location == GL_INVALID_INDEX)
+	{
+		fatalError("Uniform" + uniformName + " not found in shader!");
+	}
+	return location;
 }
 
 void GLSLProgram::addAttribute(const std::string& attributeName)
@@ -142,7 +155,7 @@ void GLSLProgram::compileShader(const std::string& filePath, GLuint id)
 		//Exit with failure
 		glDeleteShader(id); //Don't leak the shader
 
-		std::printf("&s\n", &(errorLog[0]));
+		std::printf("%s\n", &(errorLog[0]));
 		fatalError("Shader " + filePath + " failed to compile");
 	}
 }

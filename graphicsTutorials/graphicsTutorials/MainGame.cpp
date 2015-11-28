@@ -4,29 +4,33 @@
 #include <iostream>
 #include <string>
 
-
-MainGame::MainGame()
+//Constructor, just initializes private member variables
+MainGame::MainGame() : 
+	_screenWidth(1024), 
+	_screenHeight(768),
+	_time(0.0f),
+	_window(nullptr), 
+	_gameState(GameState::PLAY)
 {
-	_window = nullptr;
-	_screenWidth = 1024;
-	_screenHeight = 768;
-	_gameState = GameState::PLAY;
+
 }
 
-
+//Destructor
 MainGame::~MainGame()
 {
 }
 
+//Runs the game
 void MainGame::run()
 {
 	initSystems();
 
-	_sprite.init(-1.0f, -1.0f, 1.0f, 1.0f);
+	_sprite.init(-1.0f, -1.0f, 2.0f, 2.0f);
 
 	gameLoop();
 }
 
+//Initialize SDL and Opengl and whatever else we need
 void MainGame::initSystems()
 {
 	//Initialize SDL
@@ -62,6 +66,7 @@ void MainGame::initShaders()
 {
 	_colorProgram.compileShaders("Shaders/colorShading.vert.txt", "Shaders/colorShading.frag.txt");
 	_colorProgram.addAttribute("vertexPosition");
+	_colorProgram.addAttribute("vertexColor");
 	_colorProgram.linkShaders();
 }
 
@@ -70,6 +75,7 @@ void MainGame::gameLoop()
 	while (_gameState != GameState::EXIT)
 	{
 		processInput();
+		_time += 0.01;
 		drawGame();
 	}
 }
@@ -95,6 +101,7 @@ void MainGame::processInput()
 //Draws the game using OpenGL
 void MainGame::drawGame()
 {
+
 	//Set the base depth to 1.0
 	glClearDepth(1.0);
 	//Clear the color and depth buffer
@@ -102,6 +109,9 @@ void MainGame::drawGame()
 
 	_colorProgram.use();
 	
+	GLuint timeLocation = _colorProgram.getUniformLocation("time");
+	glUniform1f(timeLocation, _time);
+
 	//Draw our Sprite
 	_sprite.draw();
 
