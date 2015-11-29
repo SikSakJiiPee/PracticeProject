@@ -1,6 +1,5 @@
 #include "MainGame.h"
 #include "Errors.h"
-#include "ImageLoader.h"
 
 #include <iostream>
 #include <string>
@@ -21,15 +20,22 @@ MainGame::~MainGame()
 {
 }
 
-//Runs the game
+//This runs the game
 void MainGame::run()
 {
 	initSystems();
 
-	_sprite.init(-1.0f, -1.0f, 2.0f, 2.0f);
+	//Initialize our sprite
+	_sprites.push_back(new Sprite());
+	_sprites.back()->init(-1.0f, -1.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
-	_playerTexture = ImageLoader::loadPNG("Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	_sprites.push_back(new Sprite());
+	_sprites.back()->init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
+	_sprites.push_back(new Sprite());
+	_sprites.back()->init(-1.0f, 0.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+
+	//This only returns when the game ends
 	gameLoop();
 }
 
@@ -96,7 +102,7 @@ void MainGame::processInput()
 			_gameState = GameState::EXIT;
 			break;
 		case SDL_MOUSEMOTION:
-			std::cout << evnt.motion.x << " " << evnt.motion.y << std::endl;
+			//std::cout << evnt.motion.x << " " << evnt.motion.y << std::endl;
 			break;
 		}
 	}
@@ -111,17 +117,26 @@ void MainGame::drawGame()
 	//Clear the color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//Enable the shader
 	_colorProgram.use();
+
+	//We are using texture unit 0
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _playerTexture.id);
+
+	//Get the uniform location
 	GLint textureLocation = _colorProgram.getUniformLocation("mySampler");
+	//Tell the shader that the texture is in texture unit 0
 	glUniform1i(textureLocation, 0);
 
+	//Set the constantly changing time variable
 	GLuint timeLocation = _colorProgram.getUniformLocation("time");
 	glUniform1f(timeLocation, _time);
 
 	//Draw our Sprite
-	_sprite.draw();
+	for (int i = 0; i < _sprites.size(); i++)
+	{
+		_sprites[i]->draw();
+	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	_colorProgram.unuse();
