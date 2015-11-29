@@ -3,9 +3,10 @@
 
 #include <string>
 
+//Lopads images into GLTextures
 class ImageLoader
 {
 public:
-	GLTexture loadPNG(std::string filePath);
+	static GLTexture loadPNG(std::string filePath);
 };
 

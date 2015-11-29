@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 #include "GLSLProgram.h"
+#include "GLTexture.h"
 
 #include "Sprite.h"
 
@@ -38,6 +39,7 @@ private:
 	Sprite _sprite;
 
 	GLSLProgram _colorProgram;
+	GLTexture _playerTexture;
 
 	float _time;
 };
