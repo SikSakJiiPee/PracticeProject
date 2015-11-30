@@ -1,12 +1,15 @@
-﻿Build started 30.11.2015 19.18.45.
+﻿Build started 30.11.2015 20.42.36.
      1>Project "C:\Users\Jussi\Desktop\PracticeProject\graphicsTutorials\graphicsTutorials\graphicsTutorials.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ResourceManager.cpp Sprite.cpp TextureCache.cpp
-         TextureCache.cpp
-         Sprite.cpp
-         Generating Code...
-         Compiling...
-         ResourceManager.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainGame.cpp main.cpp
+         main.cpp
+         MainGame.cpp
+     1>c:\users\jussi\desktop\practiceproject\graphicstutorials\graphicstutorials\maingame.cpp(91): warning C4244: 'initializing' : conversion from 'Uint32' to 'float', possible loss of data
+     1>c:\users\jussi\desktop\practiceproject\graphicstutorials\graphicstutorials\maingame.cpp(94): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\jussi\desktop\practiceproject\graphicstutorials\graphicstutorials\maingame.cpp(111): warning C4244: 'argument' : conversion from 'float' to 'Uint32', possible loss of data
+     1>c:\users\jussi\desktop\practiceproject\graphicstutorials\graphicstutorials\maingame.cpp(159): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jussi\desktop\practiceproject\graphicstutorials\graphicstutorials\maingame.cpp(178): warning C4244: 'initializing' : conversion from 'Uint32' to 'float', possible loss of data
+     1>c:\users\jussi\desktop\practiceproject\graphicstutorials\graphicstutorials\maingame.cpp(181): warning C4244: '=' : conversion from 'Uint32' to 'float', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jussi\Desktop\PracticeProject\graphicsTutorials\Debug\graphicsTutorials.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib opengl32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Jussi\Desktop\PracticeProject\graphicsTutorials\Debug\graphicsTutorials.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jussi\Desktop\PracticeProject\graphicsTutorials\Debug\graphicsTutorials.lib" /MACHINE:X86 Debug\Errors.obj
@@ -19,10 +22,9 @@
          Debug\ResourceManager.obj
          Debug\Sprite.obj
          Debug\TextureCache.obj
-     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
          graphicsTutorials.vcxproj -> C:\Users\Jussi\Desktop\PracticeProject\graphicsTutorials\Debug\graphicsTutorials.exe
      1>Done Building Project "C:\Users\Jussi\Desktop\PracticeProject\graphicsTutorials\graphicsTutorials\graphicsTutorials.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.49
+Time Elapsed 00:00:01.06

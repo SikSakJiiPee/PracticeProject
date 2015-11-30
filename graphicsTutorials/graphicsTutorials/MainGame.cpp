@@ -5,12 +5,13 @@
 #include <string>
 
 //Constructor, just initializes private member variables
-MainGame::MainGame() : 
-	_screenWidth(1024), 
+MainGame::MainGame() :
+	_screenWidth(1024),
 	_screenHeight(768),
 	_time(0.0f),
-	_window(nullptr), 
-	_gameState(GameState::PLAY)
+	_window(nullptr),
+	_gameState(GameState::PLAY),
+	_maxFPS(60.0f)
 {
 
 }
@@ -32,9 +33,11 @@ void MainGame::run()
 	_sprites.push_back(new Sprite());
 	_sprites.back()->init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
-	_sprites.push_back(new Sprite());
-	_sprites.back()->init(-1.0f, 0.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
-
+	for (int i = 0; i < 1000; i++)
+	{
+		_sprites.push_back(new Sprite());
+		_sprites.back()->init(-1.0f, 0.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	}
 	//This only returns when the game ends
 	gameLoop();
 }
@@ -84,9 +87,29 @@ void MainGame::gameLoop()
 {
 	while (_gameState != GameState::EXIT)
 	{
+		//Used for frame time measuring
+		float startTicks = SDL_GetTicks();
+
 		processInput();
 		_time += 0.01;
 		drawGame();
+		calculateFPS();
+
+		//print only once every 10 frames
+		static int frameCounter = 0;
+		frameCounter++;
+		if (frameCounter == 10)
+		{
+			std::cout << _fps << std::endl;
+			frameCounter = 0;
+		}
+
+		float frameTicks = SDL_GetTicks() - startTicks;
+		//Limit the FPS to the max FPS
+		if (1000.0f / _maxFPS > frameTicks)
+		{
+			SDL_Delay(1000.0f / _maxFPS - frameTicks);
+		}
 	}
 }
 
@@ -143,4 +166,51 @@ void MainGame::drawGame()
 
 	//Swap our buffer and draw everything to the screen!
 	SDL_GL_SwapWindow(_window);
+}
+
+
+void MainGame::calculateFPS()
+{
+	static const int NUM_SAMPLES = 10;
+	static float frameTimes[NUM_SAMPLES];
+	static int currentFrame = 0;
+
+	static float prevTicks = SDL_GetTicks();
+
+	float currentTicks;
+	currentTicks = SDL_GetTicks();
+
+	_frameTime = currentTicks - prevTicks;
+	frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
+
+	prevTicks = currentTicks;
+
+	int count;
+
+	currentFrame++;
+	if (currentFrame < NUM_SAMPLES)
+	{
+		count = currentFrame;
+	}
+	else
+	{
+		count = NUM_SAMPLES;
+	}
+
+	float frameTimeAverage = 0;
+	for (int i = 0; i < count; i++)
+	{
+		frameTimeAverage += frameTimes[i];
+	}
+	frameTimeAverage /= count;
+
+	if (frameTimeAverage > 0)
+	{
+		_fps = 1000.0f / frameTimeAverage;
+	}
+	else
+	{
+		_fps = 60.0f;
+	}
+
 }
