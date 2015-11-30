@@ -33,11 +33,6 @@ void MainGame::run()
 	_sprites.push_back(new Sprite());
 	_sprites.back()->init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
-	for (int i = 0; i < 1000; i++)
-	{
-		_sprites.push_back(new Sprite());
-		_sprites.back()->init(-1.0f, 0.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
-	}
 	//This only returns when the game ends
 	gameLoop();
 }
@@ -48,12 +43,18 @@ void MainGame::initSystems()
 	//Initialize SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
 
+	//Tell SDL that we want a double buffered window
+	//so we dont get any flickering
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	//Open an SDL window
 	_window = SDL_CreateWindow("Game Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL);
 	if (_window == nullptr)
 	{
 		fatalError("SDL Window could not be created!");
 	}
 
+	//Set up our OpenGL context
 	SDL_GLContext glContext = SDL_GL_CreateContext(_window);
 	if (glContext == nullptr)
 	{
@@ -67,9 +68,14 @@ void MainGame::initSystems()
 		fatalError("Could not initialize glew!");
 	}
 
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	//Check the OpenGL version
+	std::printf("***   OpenGL Version: %s   ***\n", glGetString(GL_VERSION));
 
+	//Set the background color to blue
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+	//Set VSYNC
+	SDL_GL_SetSwapInterval(0);
 
 	initShaders();
 }
