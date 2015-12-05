@@ -3,10 +3,13 @@
 
 #include <string>
 
-//Lopads images into GLTextures
-class ImageLoader
+namespace Bengine
 {
-public:
-	static GLTexture loadPNG(std::string filePath);
-};
+	//Lopads images into GLTextures
+	class ImageLoader
+	{
+	public:
+		static GLTexture loadPNG(std::string filePath);
+	};
 
+}
