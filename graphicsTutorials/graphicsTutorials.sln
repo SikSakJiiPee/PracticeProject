@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "graphicsTutorials", "graphicsTutorials\graphicsTutorials.vcxproj", "{A0E6D3DF-E07E-42BF-835B-ECDF1D51CD19}"
+	ProjectSection(ProjectDependencies) = postProject
+		{40C3CD9C-859C-4BB1-B781-C70F63F2698C} = {40C3CD9C-859C-4BB1-B781-C70F63F2698C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bengine", "Bengine\Bengine.vcxproj", "{40C3CD9C-859C-4BB1-B781-C70F63F2698C}"
 EndProject
