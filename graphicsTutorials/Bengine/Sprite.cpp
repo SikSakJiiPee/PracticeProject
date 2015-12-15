@@ -90,9 +90,7 @@ namespace Bengine
 		//bind the buffer object
 		glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 
-		//Tell opengl that we want to use the first
-		//attribute array. We only need one array
-		//right now since we are only using position.
+		//Tell opengl what attribute arrays we want to use.
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
@@ -107,7 +105,7 @@ namespace Bengine
 		//Draw the 6 vertices to the screen
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		//Disable the vertex attrib array. This is not optional.
+		//Disable the vertex attrib arrays. This is not optional.
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
