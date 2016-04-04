@@ -37,19 +37,19 @@ namespace Bengine
 		newGlyph->depth = depth;
 
 		newGlyph->topLeft.color = color;
-		newGlyph->topLeft.setPosition.x(destRect.x, destRect.y + uvRect.w);
+		newGlyph->topLeft.setPosition(destRect.x, destRect.y + uvRect.w);
 		newGlyph->topLeft.setUV(uvRect.x, uvRect.y + uvRect.w);
 
 		newGlyph->bottomLeft.color = color;
-		newGlyph->bottomLeft.setPosition.x(destRect.x, destRect.y);
+		newGlyph->bottomLeft.setPosition(destRect.x, destRect.y);
 		newGlyph->bottomLeft.setUV(uvRect.x, uvRect.y);
 
 		newGlyph->bottomRight.color = color;
-		newGlyph->bottomRight.setPosition.x(destRect.x + destRect.z, destRect.y);
+		newGlyph->bottomRight.setPosition(destRect.x + destRect.z, destRect.y);
 		newGlyph->bottomRight.setUV(uvRect.x + destRect.z, uvRect.y);
 
 		newGlyph->topRight.color = color;
-		newGlyph->topRight.setPosition.x(destRect.x + destRect.z, destRect.y + uvRect.w);
+		newGlyph->topRight.setPosition(destRect.x + destRect.z, destRect.y + uvRect.w);
 		newGlyph->topRight.setUV(uvRect.x + destRect.z, uvRect.y + uvRect.w);
 
 		_glyphs.push_back(newGlyph);
